@@ -11,14 +11,14 @@
 using namespace std;
 
 
-// ---------- ANSI Colors for CLI ----------
+// ANSI Colors for CLI
 #define RESET   "\033[0m"
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
 #define YELLOW  "\033[33m"
 #define CYAN    "\033[36m"
 
-// ---------- Utility functions ----------
+// Utility functions
 static inline string trim(const string &s) {
     size_t start = s.find_first_not_of(" \t\r\n");
     if (start == string::npos) return "";
@@ -58,7 +58,7 @@ string current_date() {
 // Forward declaration
 class Account;
 
-// ---------- Base Class ----------
+// Base Class
 class Transaction {
 protected:
     double amount;
@@ -81,7 +81,7 @@ public:
     string getDesc() const { return description; }
 };
 
-// ---------- Account Class ----------
+// Account Class
 class Account {
 private:
     double balance;
@@ -112,7 +112,7 @@ public:
     void loadFromFile();
 };
 
-// ---------- Derived Classes ----------
+// Derived Classes
 class Income : public Transaction {
 public:
     Income(double amt, string cat, string dt, string desc = "")
@@ -129,7 +129,7 @@ public:
     string type() const override { return "Expense"; }
 };
 
-// ---------- Account method definitions ----------
+// Account method definitions
 bool Account::addTransaction(shared_ptr<Transaction> tx) {
     if (!tx) return false;
     if (tx->getAmount() <= 0.0) {
@@ -192,11 +192,11 @@ void Account::loadFromFile() {
         cout << YELLOW << "Loaded " << count << " previous transactions.\n" << RESET;
 }
 
-// ---------- Income/Expense apply ----------
+// Income/Expense apply
 void Income::apply(Account &acc) const { acc.deposit(amount); }
 void Expense::apply(Account &acc) const { acc.withdraw(amount); }
 
-// ---------- ReportGenerator ----------
+// ReportGenerator
 class ReportGenerator {
 public:
     void printMonthlyReport(const Account &acc, const string &monthYear) const {
@@ -234,7 +234,7 @@ public:
     }
 };
 
-// ---------- CLI ----------
+// CLI
 void showMenu(double balance) {
     cout << CYAN << "\n--------------------------------\n";
     cout << "   Personal Finance Tracker     \n";
